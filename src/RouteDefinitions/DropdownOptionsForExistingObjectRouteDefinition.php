@@ -2,12 +2,15 @@
 namespace Apie\CmsApiDropdownOption\RouteDefinitions;
 
 use Apie\CmsApiDropdownOption\Actions\DropdownOptionsAction;
+use Apie\CmsApiDropdownOption\Controllers\DropdownOptionController;
+use Apie\Common\Enums\UrlPrefix;
+use Apie\Common\Lists\UrlPrefixList;
+use Apie\Common\RouteDefinitions\AbstractRestApiRouteDefinition;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
-use Apie\RestApi\RouteDefinitions\AbstractRestApiRouteDefinition;
 
- class DropdownOptionsForExistingObjectRouteDefinition extends AbstractRestApiRouteDefinition
- {
+class DropdownOptionsForExistingObjectRouteDefinition extends AbstractRestApiRouteDefinition
+{
     public function getMethod(): RequestMethod
     {
         return RequestMethod::POST;
@@ -16,6 +19,11 @@ use Apie\RestApi\RouteDefinitions\AbstractRestApiRouteDefinition;
     public function getUrl(): UrlRouteDefinition
     {
         return new UrlRouteDefinition($this->class->getShortName() . '/{id}/dropdown-options/{property}');
+    }
+
+    public function getController(): string
+    {
+        return DropdownOptionController::class;
     }
 
     public function getAction(): string
@@ -27,4 +35,9 @@ use Apie\RestApi\RouteDefinitions\AbstractRestApiRouteDefinition;
     {
         return 'cms.dropdown_options.existing.' . $this->class->getShortName();
     }
- }
+
+    final public function getUrlPrefixes(): UrlPrefixList
+    {
+        return new UrlPrefixList([UrlPrefix::CMS, UrlPrefix::API]);
+    }
+}

@@ -9,7 +9,7 @@ use Apie\Common\RouteDefinitions\AbstractRestApiRouteDefinition;
 use Apie\Core\Enums\RequestMethod;
 use Apie\Core\ValueObjects\UrlRouteDefinition;
 
-class DropdownOptionsForNewObjectRouteDefinition extends AbstractRestApiRouteDefinition
+class DropdownOptionsForGlobalMethodRouteDefinition extends AbstractRestApiRouteDefinition
 {
     public function getMethod(): RequestMethod
     {
@@ -18,7 +18,7 @@ class DropdownOptionsForNewObjectRouteDefinition extends AbstractRestApiRouteDef
 
     public function getUrl(): UrlRouteDefinition
     {
-        return new UrlRouteDefinition($this->class->getShortName() . '/dropdown-options/{property}');
+        return new UrlRouteDefinition('action/' . $this->class->getShortName() . '/' . $this->method->getName() . '/dropdown-options/{property}');
     }
 
     public function getController(): string
@@ -33,7 +33,7 @@ class DropdownOptionsForNewObjectRouteDefinition extends AbstractRestApiRouteDef
 
     public function getOperationId(): string
     {
-        return 'cms.dropdown_options.' . $this->class->getShortName();
+        return 'cms.dropdown_options.method-call.' . $this->class->getShortName() . '-' . $this->method->getName();
     }
 
     final public function getUrlPrefixes(): UrlPrefixList
